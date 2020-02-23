@@ -1,0 +1,155 @@
+﻿<Window
+    x:Class="NetworkScanner.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.com/icons/"
+    xmlns:local="clr-namespace:NetworkScanner"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{Binding Title}"
+    Width="600"
+    Height="450"
+    MinWidth="600"
+    MinHeight="450"
+    d:DataContext="{d:DesignInstance local:MainWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <!--  Custom Window Style  -->
+    <Window.Resources>
+
+        <!--  Window Control Button  -->
+        <Style x:Key="WindowControlButton" TargetType="{x:Type Button}">
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1.5" />
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignBackground}" />
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--  Window Close Button  -->
+        <Style
+            x:Key="WindowCloseButton"
+            BasedOn="{StaticResource WindowControlButton}"
+            TargetType="{x:Type Button}">
+            <Setter Property="FontWeight" Value="UltraBold" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="Red" />
+                    <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBackground}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CustomWindowStyle" TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:MainWindow}">
+
+                        <Grid Background="{DynamicResource MaterialDesignBackground}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid
+                                Height="40"
+                                VerticalAlignment="Top"
+                                Background="{DynamicResource PrimaryHueDarkBrush}">
+
+                                <!--  Title  -->
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="22"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}"
+                                    TextAlignment="Center" />
+
+                                <!--  Window Buttons  -->
+                                <StackPanel
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"
+                                    Orientation="Horizontal">
+                                    <Button Command="{Binding MinimizeWindowCommand}" Style="{StaticResource WindowControlButton}">
+                                        <fa:FontAwesome
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Icon="Regular_WindowMinimize" />
+                                    </Button>
+                                    <Button Command="{Binding MaximizeWindowCommand}" Style="{StaticResource WindowControlButton}">
+                                        <StackPanel>
+                                            <fa:FontAwesome
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Icon="Solid_WindowMaximize"
+                                                Visibility="{Binding windowIsMaximised}" />
+                                            <fa:FontAwesome
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Icon="Solid_WindowRestore"
+                                                Visibility="{Binding windowIsMaximised, Converter={local:InvertVisibilityConverter}}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Command="{Binding CloseWindowCommand}" Style="{StaticResource WindowCloseButton}">
+                                        <fa:FontAwesome
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Icon="Solid_WindowClose" />
+                                    </Button>
+                                </StackPanel>
+
+                            </Grid>
+
+                            <!--  This is the ContentPresenter that displays the window content.  -->
+                            <Border Grid.Row="2" Margin="0">
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <!--  Enables resize and drag etc  -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="40"
+            GlassFrameThickness="-1"
+            ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <!--  Application Page Content  -->
+        <Frame
+            x:Name="MainFrame"
+            Content="{Binding CurrentPage}"
+            NavigationUIVisibility="Hidden" />
+    </Grid>
+</Window>

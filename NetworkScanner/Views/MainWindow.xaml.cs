@@ -20,9 +20,24 @@ namespace NetworkScanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel vm;
         public MainWindow()
         {
+            Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            vm = new MainWindowViewModel();
+            this.DataContext = vm;
+            this.StateChanged += vm.WindowStateChanged;
             InitializeComponent();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Style _style = null;
+            if (Microsoft.Windows.Shell.SystemParameters2.Current.IsGlassEnabled == true)
+            {
+                _style = (Style)Resources["CustomWindowStyle"];
+            }
+            this.Style = _style;
         }
     }
 }

@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.28307.1022
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkScanner", "NetworkScanner\NetworkScanner.csproj", "{C141C9CF-C8C3-46F5-B025-2805BAC7BC47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkScanClassLibrary", "..\NetworkScanClassLibrary\NetworkScanClassLibrary\NetworkScanClassLibrary.csproj", "{C53EE3BA-5E10-4D80-8A18-F3319E903EB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkScanUnitTest", "..\NetworkScanClassLibrary\NetworkScanUnitTest\NetworkScanUnitTest.csproj", "{1A196305-7478-42B1-9216-C8D46381594A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkScannerTest", "NetworkScannerTest\NetworkScannerTest.csproj", "{F42E7858-03A7-4F10-B265-B5AB193E0923}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{C141C9CF-C8C3-46F5-B025-2805BAC7BC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C141C9CF-C8C3-46F5-B025-2805BAC7BC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C141C9CF-C8C3-46F5-B025-2805BAC7BC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C53EE3BA-5E10-4D80-8A18-F3319E903EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C53EE3BA-5E10-4D80-8A18-F3319E903EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C53EE3BA-5E10-4D80-8A18-F3319E903EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C53EE3BA-5E10-4D80-8A18-F3319E903EB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A196305-7478-42B1-9216-C8D46381594A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A196305-7478-42B1-9216-C8D46381594A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A196305-7478-42B1-9216-C8D46381594A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A196305-7478-42B1-9216-C8D46381594A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F42E7858-03A7-4F10-B265-B5AB193E0923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42E7858-03A7-4F10-B265-B5AB193E0923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42E7858-03A7-4F10-B265-B5AB193E0923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42E7858-03A7-4F10-B265-B5AB193E0923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
