@@ -14,6 +14,7 @@ namespace NetworkScanner
         #region Public Variables
         public NetworkRangeModel NetworkRange { get; set; }
         public bool ScanNetworkButtonBusy { get; set; }
+        public InformationModel Information { get; set; } = new InformationModel();
         public double FontSizeScaledForWindowWidth
         {
             get
@@ -36,8 +37,10 @@ namespace NetworkScanner
         {
             NetworkRange = new NetworkRangeModel();
             scanner = new NetworkPing();
+            SetIpRangeBasedOnActiveInterfaceAdapter();
             ClearListOfActiveNetworkIpAddresses();
-            scanner.ScanNetworkFoundAsyncDelegate += ScanIpAddress;
+            scanner.ScanNetworkFoundAsyncDelegate += ScanIpAddressAsync;
+            scanner.ScanNetworkCurrentIpAddressDelegate += UpdateInformationWithCurrentIpAddress;
             Title = "Form";
             SetCommands();
         }
@@ -52,6 +55,7 @@ namespace NetworkScanner
             ScanNetworkButtonBusy = true;
             OnPropertyChanged(nameof(ScanNetworkButtonBusy));
             await scanner.ScanNetwork(NetworkRange.StartIpAddress, NetworkRange.EndIpAddress, NetworkRange.Subnet);
+            ClearInformation();
             ScanNetworkButtonBusy = false;
             OnPropertyChanged(nameof(ScanNetworkButtonBusy));
         }
@@ -61,7 +65,7 @@ namespace NetworkScanner
         {
             ScanNetworkCommand = new RelayCommand(async () => await ScanNetworkCommandAction());
         }
-        private async Task ScanIpAddress(string ipAddress)
+        private async Task ScanIpAddressAsync(string ipAddress)
         {
             var result = await scanner.ScanAddress(ipAddress);
             AddIpAddressToList($"IP Address:\t{ipAddress}\t\tAverage time:\t{result}ms");
@@ -70,9 +74,26 @@ namespace NetworkScanner
         {
             NetworkRange.ListOfActiveNetworkIpAddresses.Add(ipAddress);
         }
+        private void UpdateInformationWithCurrentIpAddress(string ipAddress)
+        {
+            Information.Message = $"Information: Current IP address {ipAddress}";
+            Information.Active = true;
+            OnPropertyChanged(nameof(Information));
+        }
+        private void ClearInformation()
+        {
+            Information.Message = null;
+            Information.Active = false;
+        }
         private void ClearListOfActiveNetworkIpAddresses()
         {
             NetworkRange.ListOfActiveNetworkIpAddresses.Clear();
+        }
+        private void SetIpRangeBasedOnActiveInterfaceAdapter()
+        {
+            NetworkRange.StartIpAddress = scanner.GetFirstIpAddressInNetwork();
+            NetworkRange.EndIpAddress = scanner.GetLastIpAddressInNetwork();
+            NetworkRange.Subnet = scanner.GetSubnetAddressOfNetwork();
         }
         #endregion
     }

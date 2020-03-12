@@ -16,7 +16,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{DynamicResource MaterialDesignBackground}">
-        <Grid Margin="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="50">
             <!--#region Grid Definitions-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -123,6 +127,12 @@
             </Border>
             <!--#endregion-->
         </Grid>
+        <Border
+            Grid.Row="1"
+            Background="AliceBlue"
+            Visibility="{Binding Information.Active, Converter={local:BoolToVisibilityInvertedConvertor}}">
+            <Label Content="{Binding Information.Message}" />
+        </Border>
     </Grid>
 
 </local:BasePage>
