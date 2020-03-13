@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
+using System.Reflection;
 
 namespace NetworkScanner
 {
@@ -16,11 +17,22 @@ namespace NetworkScanner
         #region Private Variables
         private INavigationService _navigationService;
         private ILoggingService _logger;
+        private string Version
+        {
+            get
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                var Major = assembly.GetName().Version.Major;
+                var Minor = assembly.GetName().Version.Minor;
+                var Build = assembly.GetName().Version.Build;
+                return $"V{Major}.{Minor}.{Build}";
+            }
+        }
         #endregion
         #region Constructors
         public MainWindowViewModel()
         {
-            Title = "Network Scanner";
+            Title = $"Network Scanner - {Version}";
             SetCommands();
             _navigationService = IoC.Get<INavigationService>();
             _navigationService.Navigate(NavigationPages.FirstOrDefault(p => p.ViewModel.Title == "Form"));
