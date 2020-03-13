@@ -51,13 +51,25 @@ namespace NetworkScanner
         #region CommandActions
         private async Task ScanNetworkCommandAction()
         {
-            ClearListOfActiveNetworkIpAddresses();
-            ScanNetworkButtonBusy = true;
-            OnPropertyChanged(nameof(ScanNetworkButtonBusy));
-            await scanner.ScanNetwork(NetworkRange.StartIpAddress, NetworkRange.EndIpAddress, NetworkRange.Subnet);
-            ClearInformation();
-            ScanNetworkButtonBusy = false;
-            OnPropertyChanged(nameof(ScanNetworkButtonBusy));
+            if (ScanNetworkButtonBusy)
+            {
+                scanner.CancelAllScanning();
+            } else
+            {
+                ClearListOfActiveNetworkIpAddresses();
+                ScanNetworkButtonBusy = true;
+                OnPropertyChanged(nameof(ScanNetworkButtonBusy));
+                await scanner.ScanNetwork(NetworkRange.StartIpAddress, NetworkRange.EndIpAddress, NetworkRange.Subnet);
+                ClearInformation();
+                ScanNetworkButtonBusy = false;
+                OnPropertyChanged(nameof(ScanNetworkButtonBusy));
+            }
+            
+        }
+
+        private void CancelScanNetworkCommandAction()
+        {
+            scanner.CancelAllScanning();
         }
         #endregion
         #region Helpers
@@ -65,6 +77,7 @@ namespace NetworkScanner
         {
             ScanNetworkCommand = new RelayCommand(async () => await ScanNetworkCommandAction());
         }
+
         private async Task ScanIpAddressAsync(string ipAddress)
         {
             var result = await scanner.ScanAddress(ipAddress);
@@ -84,6 +97,7 @@ namespace NetworkScanner
         {
             Information.Message = null;
             Information.Active = false;
+            OnPropertyChanged(nameof(Information));
         }
         private void ClearListOfActiveNetworkIpAddresses()
         {

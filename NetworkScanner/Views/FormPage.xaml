@@ -42,6 +42,7 @@
                 Margin="10"
                 materialDesign:HintAssist.Hint="Start IPAddress"
                 FontSize="{Binding FontSizeScaledForWindowWidth}"
+                IsReadOnly="{Binding ScanNetworkButtonBusy}"
                 SelectionBrush="{DynamicResource PrimaryHueDarkBrush}"
                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding NetworkRange.StartIpAddress, UpdateSourceTrigger=PropertyChanged}" />
@@ -51,6 +52,7 @@
                 Margin="10"
                 materialDesign:HintAssist.Hint="End IPAddress"
                 FontSize="{Binding FontSizeScaledForWindowWidth}"
+                IsReadOnly="{Binding ScanNetworkButtonBusy}"
                 SelectionBrush="{DynamicResource PrimaryHueDarkBrush}"
                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding NetworkRange.EndIpAddress, UpdateSourceTrigger=PropertyChanged}" />
@@ -60,6 +62,7 @@
                 Margin="10"
                 materialDesign:HintAssist.Hint="Subnet"
                 FontSize="{Binding FontSizeScaledForWindowWidth}"
+                IsReadOnly="{Binding ScanNetworkButtonBusy}"
                 SelectionBrush="{DynamicResource PrimaryHueDarkBrush}"
                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding NetworkRange.Subnet, UpdateSourceTrigger=PropertyChanged}" />
@@ -71,7 +74,6 @@
                 VerticalContentAlignment="Center"
                 Command="{Binding ScanNetworkCommand}"
                 FontSize="{Binding FontSizeScaledForWindowWidth}"
-                IsHitTestVisible="{Binding ScanNetworkButtonBusy, Converter={local:InvertBoolValueConvertor}}"
                 Style="{DynamicResource MaterialDesignRaisedButton}">
                 <Grid>
                     <Label
@@ -82,32 +84,14 @@
                         Content="Scan Network"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         Visibility="{Binding ScanNetworkButtonBusy, Converter={local:BoolToVisibilityConvertor}}" />
-                    <fa:FontAwesome
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Icon="Solid_Spinner"
-                        RenderTransformOrigin="0.5, 0.5"
-                        Visibility="{Binding ScanNetworkButtonBusy, Converter={local:BoolToVisibilityInvertedConvertor}}">
-                        <fa:FontAwesome.RenderTransform>
-                            <RotateTransform />
-                        </fa:FontAwesome.RenderTransform>
-                        <fa:FontAwesome.Triggers>
-                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation
-                                                RepeatBehavior="Forever"
-                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                                From="0"
-                                                To="360"
-                                                Duration="00:00:02" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                        </fa:FontAwesome.Triggers>
-                    </fa:FontAwesome>
+                    <Label
+                        Margin="0"
+                        Padding="0"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Content="Cancel"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                        Visibility="{Binding ScanNetworkButtonBusy, Converter={local:BoolToVisibilityInvertedConvertor}}" />
                 </Grid>
             </Button>
             <!--#endregion-->
@@ -131,7 +115,41 @@
             Grid.Row="1"
             Background="AliceBlue"
             Visibility="{Binding Information.Active, Converter={local:BoolToVisibilityInvertedConvertor}}">
-            <Label Content="{Binding Information.Message}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="{Binding Information.Message}" />
+                <fa:FontAwesome
+                    Grid.Column="2"
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Icon="Solid_Spinner"
+                    RenderTransformOrigin="0.5, 0.5">
+                    <fa:FontAwesome.RenderTransform>
+                        <RotateTransform />
+                    </fa:FontAwesome.RenderTransform>
+                    <fa:FontAwesome.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                            From="0"
+                                            To="360"
+                                            Duration="00:00:02" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </fa:FontAwesome.Triggers>
+                </fa:FontAwesome>
+            </Grid>
         </Border>
     </Grid>
 
