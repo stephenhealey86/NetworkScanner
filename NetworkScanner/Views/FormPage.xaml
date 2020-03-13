@@ -106,8 +106,61 @@
                 <ListBox
                     Grid.Column="1"
                     Margin="5"
+                    HorizontalContentAlignment="Stretch"
+                    d:DataContext="{d:DesignInstance local:DesignTimeData,
+                                                     IsDesignTimeCreatable=True}"
                     FontSize="{Binding FontSizeScaledForWindowWidth}"
-                    ItemsSource="{Binding NetworkRange.ListOfActiveNetworkIpAddresses}" />
+                    ItemsSource="{Binding NetworkRange.ListOfActiveNetworkIpAddresses}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:NetworkScannerPingResultModel}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalContentAlignment="Center"
+                                    Content="IP Address:" />
+                                <Label
+                                    Grid.Column="3"
+                                    HorizontalContentAlignment="Center"
+                                    Content="{Binding IpAddress}" />
+                                <Label
+                                    Grid.Column="5"
+                                    HorizontalContentAlignment="Center"
+                                    Content="Average Time:" />
+                                <Label Grid.Column="7" HorizontalContentAlignment="Center">
+                                    <TextBlock>
+                                        <Run Text="{Binding AverageTime}" />
+                                        <Run Text="ms" />
+                                    </TextBlock>
+                                </Label>
+                                <Label
+                                    Grid.Column="9"
+                                    HorizontalContentAlignment="Center"
+                                    Content="Max Time:" />
+                                <Label Grid.Column="11" HorizontalContentAlignment="Center">
+                                    <TextBlock>
+                                        <Run Text="{Binding MaxTime}" />
+                                        <Run Text="ms" />
+                                    </TextBlock>
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Border>
             <!--#endregion-->
         </Grid>

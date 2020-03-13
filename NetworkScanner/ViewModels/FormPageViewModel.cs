@@ -85,9 +85,15 @@ namespace NetworkScanner
         private async Task ScanIpAddressAsync(string ipAddress)
         {
             var result = await scanner.ScanAddressMaxTime(ipAddress, AppSetings.PingTimeout, AppSetings.NumberOfPings);
-            AddIpAddressToList($"IP Address:\t{ipAddress}\tAverage time:\t{result.Item1}\tMax time:\t{result.Item2}ms");
+            var data = new NetworkScannerPingResultModel()
+            {
+                IpAddress = ipAddress,
+                AverageTime = result.Item1,
+                MaxTime = result.Item2
+            };
+            AddIpAddressToList(data);
         }
-        private void AddIpAddressToList(string ipAddress)
+        private void AddIpAddressToList(NetworkScannerPingResultModel ipAddress)
         {
             NetworkRange.ListOfActiveNetworkIpAddresses.Add(ipAddress);
         }
