@@ -108,10 +108,13 @@
     <Compile Include="IOC\IoC.cs" />
     <Compile Include="Models\InformationModel.cs" />
     <Compile Include="Models\NetworkRangeModel.cs" />
+    <Compile Include="Models\NetworkScannerSettingsModel.cs" />
     <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityInvertedConvertory.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityConvertor.cs" />
     <Compile Include="ValueConverters\InvertBoolValueConvertor.cs" />

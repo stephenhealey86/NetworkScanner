@@ -27,8 +27,10 @@ namespace NetworkScanner
                 OnPropertyChanged(nameof(FontSizeScaledForWindowWidth));
             }
         }
+        public NetworkScannerSettingsModel AppSetings { get; set; }
         #endregion
         #region Private Variables
+        private ISettingsService _settingsService;
         private NetworkPing scanner;
         private double fontSize = 18;
         #endregion
@@ -37,6 +39,8 @@ namespace NetworkScanner
         {
             NetworkRange = new NetworkRangeModel();
             scanner = new NetworkPing();
+            _settingsService = IoC.Get<ISettingsService>();
+            AppSetings = _settingsService.GetSettings();
             SetIpRangeBasedOnActiveInterfaceAdapter();
             ClearListOfActiveNetworkIpAddresses();
             scanner.ScanNetworkFoundAsyncDelegate += ScanIpAddressAsync;
@@ -80,8 +84,8 @@ namespace NetworkScanner
 
         private async Task ScanIpAddressAsync(string ipAddress)
         {
-            var result = await scanner.ScanAddress(ipAddress);
-            AddIpAddressToList($"IP Address:\t{ipAddress}\t\tAverage time:\t{result}ms");
+            var result = await scanner.ScanAddressMaxTime(ipAddress, AppSetings.PingTimeout, AppSetings.NumberOfPings);
+            AddIpAddressToList($"IP Address:\t{ipAddress}\tAverage time:\t{result.Item1}\tMax time:\t{result.Item2}ms");
         }
         private void AddIpAddressToList(string ipAddress)
         {

@@ -50,6 +50,7 @@ namespace NetworkScanner
         private static void BindViewModels()
         {
             // Must be in called order
+            Kernel.Bind<ISettingsService>().ToConstant(new SettingsService());
             Kernel.Bind<ILoggingService>().ToConstant(new LoggingService());
             Kernel.Bind<INavigationService>().ToConstant(new NavigationService());
         }
