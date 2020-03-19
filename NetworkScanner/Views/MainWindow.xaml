@@ -80,6 +80,23 @@
                                 VerticalAlignment="Top"
                                 Background="{DynamicResource PrimaryHueDarkBrush}">
 
+                                <!--  Settings  -->
+                                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Button
+                                        Width="25"
+                                        Height="25"
+                                        Margin="5"
+                                        Padding="0"
+                                        Background="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        Command="{Binding OpenSettingsCommand}"
+                                        Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                        Style="{DynamicResource MaterialDesignFloatingActionButton}"
+                                        ToolTip="Settings"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <materialDesign:PackIcon Kind="Settings" />
+                                    </Button>
+                                </StackPanel>
+
                                 <!--  Title  -->
                                 <TextBlock
                                     HorizontalAlignment="Center"
@@ -151,5 +168,7 @@
             x:Name="MainFrame"
             Content="{Binding CurrentPage}"
             NavigationUIVisibility="Hidden" />
+
+        <materialDesign:DialogHost Grid.Row="1" Background="Transparent" />
     </Grid>
 </Window>

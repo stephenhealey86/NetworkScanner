@@ -9,6 +9,8 @@ namespace NetworkScanner
 {
     public class SettingsService : ISettingsService
     {
+        public event SettingsUpdatedDelegate SettingsUpdated;
+
         public NetworkScannerSettingsModel GetSettings()
         {
             var settings = Properties.Settings.Default.AppSetting;
@@ -29,6 +31,7 @@ namespace NetworkScanner
             var json = JsonConvert.SerializeObject(settingsModel);
             Properties.Settings.Default.AppSetting = json;
             Properties.Settings.Default.Save();
+            SettingsUpdated?.Invoke();
         }
     }
 }

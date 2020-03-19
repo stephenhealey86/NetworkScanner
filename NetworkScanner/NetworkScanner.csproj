@@ -104,7 +104,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\BaseUIComponent.cs" />
     <Compile Include="Controls\myIPEntry.cs" />
+    <Compile Include="Controls\myNumericEntry.cs" />
+    <Compile Include="Controls\SettingsUserControl.xaml.cs">
+      <DependentUpon>SettingsUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DesignTime\DesignTimeData.cs" />
     <Compile Include="IOC\IoC.cs" />
     <Compile Include="Models\InformationModel.cs" />
@@ -123,6 +128,10 @@
     <Compile Include="ValueConverters\InvertVisibilityConverter.cs" />
     <Compile Include="ViewModels\FormPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="Controls\SettingsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FormPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +149,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RelayParameterCommand.cs" />
+    <Compile Include="ViewModels\SettingsUserControlViewModel.cs" />
     <Compile Include="Views\AbstractPage.cs" />
     <Compile Include="Views\BasePage.cs" />
     <Compile Include="Views\FormPage.xaml.cs">

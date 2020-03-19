@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 using System.Reflection;
+using MaterialDesignThemes.Wpf;
+using System.Threading.Tasks;
 
 namespace NetworkScanner
 {
@@ -15,6 +17,8 @@ namespace NetworkScanner
         public List<AbstractPage> NavigationPages => _navigationService.GetAllPages();
         #endregion
         #region Private Variables
+        private DialogOpenedEventArgs dialogOpenedEventArgs;
+        private SettingsUserControl SettingsUserControl;
         private INavigationService _navigationService;
         private ILoggingService _logger;
         private string Version
@@ -44,6 +48,7 @@ namespace NetworkScanner
         public ICommand MinimizeWindowCommand { get; set; }
         public ICommand MaximizeWindowCommand { get; set; }
         public ICommand CloseWindowCommand { get; set; }
+        public ICommand OpenSettingsCommand { get; set; }
         #endregion
         #region Helpers
         private void SetCommands()
@@ -52,15 +57,41 @@ namespace NetworkScanner
             MinimizeWindowCommand = new RelayCommand(() => App.Current.MainWindow.WindowState = WindowState.Minimized);
             MaximizeWindowCommand = new RelayCommand(() => App.Current.MainWindow.WindowState ^= WindowState.Maximized);
             CloseWindowCommand = new RelayCommand(() => { App.Current.MainWindow.Close(); });
+            OpenSettingsCommand = new RelayCommand(async () => await OpenSettingsCommandAction());
         }
 
         public void WindowStateChanged(object sender, EventArgs e)
         {
             OnPropertyChanged(nameof(windowIsMaximised));
         }
+
+        public void CloseDialog()
+        {
+            dialogOpenedEventArgs?.Session.Close();
+        }
+        public async Task OpenDialogAsync()
+        {
+            try
+            {
+                var content = new SettingsUserControl();
+                content.ViewModel.CloseDialog += CloseDialog;
+                await DialogHost.Show(content, delegate (object sender, DialogOpenedEventArgs args)
+                {
+                    dialogOpenedEventArgs = args;
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevels.Error, e.Message);
+                _logger.Log(LogLevels.Error, e.StackTrace);
+            }
+        }
         #endregion
         #region CommandActions
-
+        private async Task OpenSettingsCommandAction()
+        {
+            await OpenDialogAsync();
+        }
         #endregion
     }
 }

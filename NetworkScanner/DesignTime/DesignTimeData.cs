@@ -9,10 +9,14 @@ namespace NetworkScanner
     public class DesignTimeData
     {
         public NetworkRangeModel NetworkRange { get; set; }
+        public SettingsUserControlViewModel SettingsUserControlViewModel { get; set; }
 
         public DesignTimeData()
         {
-            NetworkRange = new NetworkRangeModel()
+            IoC.Setup();
+            SettingsUserControlViewModel = new SettingsUserControlViewModel();
+
+            NetworkRange =  new NetworkRangeModel()
             {
                 ListOfActiveNetworkIpAddresses = new System.Collections.ObjectModel.ObservableCollection<NetworkScannerPingResultModel>()
                 {

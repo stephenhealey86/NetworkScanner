@@ -41,6 +41,7 @@ namespace NetworkScanner
             scanner = new NetworkPing();
             _settingsService = IoC.Get<ISettingsService>();
             AppSetings = _settingsService.GetSettings();
+            _settingsService.SettingsUpdated += SettingsUpdatedEvent;
             SetIpRangeBasedOnActiveInterfaceAdapter();
             ClearListOfActiveNetworkIpAddresses();
             scanner.ScanNetworkFoundAsyncDelegate += ScanIpAddressAsync;
@@ -118,6 +119,14 @@ namespace NetworkScanner
             NetworkRange.StartIpAddress = scanner.GetFirstIpAddressInNetwork();
             NetworkRange.EndIpAddress = scanner.GetLastIpAddressInNetwork();
             NetworkRange.Subnet = scanner.GetSubnetAddressOfNetwork();
+        }
+        #endregion
+
+        #region Events
+        private void SettingsUpdatedEvent()
+        {
+            AppSetings = _settingsService.GetSettings();
+            OnPropertyChanged(nameof(AppSetings));
         }
         #endregion
     }
