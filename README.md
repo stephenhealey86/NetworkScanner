@@ -16,3 +16,7 @@ There are two ways you can get the application.
     * Async network scanning.
     * Detects users on a network that support ICMP.
     * Lists all active network users and their average ICMP response time.
+    ## V1.1.0 Supports
+* Features
+    * Max response time.
+    * Cancel scanning
