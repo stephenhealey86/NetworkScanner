@@ -44,7 +44,7 @@ namespace NetworkScanner
             _settingsService.SettingsUpdated += SettingsUpdatedEvent;
             SetIpRangeBasedOnActiveInterfaceAdapter();
             ClearListOfActiveNetworkIpAddresses();
-            scanner.ScanNetworkFoundAsyncDelegate += ScanIpAddressAsync;
+            scanner.ScanNetworkFoundDelegateAsync += ScanIpAddressAsync;
             scanner.ScanNetworkCurrentIpAddressDelegate += UpdateInformationWithCurrentIpAddress;
             Title = "Form";
             SetCommands();
@@ -85,12 +85,12 @@ namespace NetworkScanner
 
         private async Task ScanIpAddressAsync(string ipAddress)
         {
-            var result = await scanner.ScanAddressMaxTime(ipAddress, AppSetings.PingTimeout, AppSetings.NumberOfPings);
+            var result = await scanner.ScanAddressForResponseTimes(ipAddress, AppSetings.PingTimeout, AppSetings.NumberOfPings);
             var data = new NetworkScannerPingResultModel()
             {
-                IpAddress = ipAddress,
-                AverageTime = result.Item1,
-                MaxTime = result.Item2
+                IpAddress = result.IpAddress,
+                AverageTime = result.AverageResponse,
+                MaxTime = result.MaxResponse
             };
             AddIpAddressToList(data);
         }

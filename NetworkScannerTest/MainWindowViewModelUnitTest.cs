@@ -22,7 +22,7 @@ namespace NetworkScannerTest
             // Arrange
             var title = "Network Scanner";
             // Assert
-            Assert.AreEqual(vm.Title, title);
+            Assert.IsTrue(vm.Title.Contains(title));
         }
     }
 }
