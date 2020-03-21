@@ -7,7 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Margin="10"
-    d:DataContext="{d:DesignInstance local:FormPageViewModel,
+    d:DataContext="{d:DesignInstance local:SettingsUserControlViewModel,
                                      IsDesignTimeCreatable=True}"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -67,6 +67,7 @@
                 MinWidth="60"
                 Margin="10"
                 materialDesign:ValidationAssist.Suppress="True"
+                MinValue="{Binding MinNumberOfPings}"
                 Style="{DynamicResource MaterialDesignTextBox}"
                 Text="{Binding Settings.NumberOfPings, UpdateSourceTrigger=PropertyChanged}" />
             <!--#endregion-->
@@ -83,6 +84,7 @@
                 MinWidth="60"
                 Margin="10"
                 materialDesign:ValidationAssist.Suppress="True"
+                MinValue="{Binding MinPingTimeout}"
                 Style="{DynamicResource MaterialDesignTextBox}"
                 Text="{Binding Settings.PingTimeout, UpdateSourceTrigger=PropertyChanged}" />
             <!--#endregion-->

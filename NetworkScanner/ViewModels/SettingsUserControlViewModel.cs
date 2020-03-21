@@ -15,6 +15,8 @@ namespace NetworkScanner
         public NetworkScannerSettingsModel Settings { get; set; }
         public delegate void Del();
         public Del CloseDialog;
+        public int MinNumberOfPings { get; set; } = 1;
+        public int MinPingTimeout { get; set; } = 50;
         #endregion
 
         #region Private Variables
