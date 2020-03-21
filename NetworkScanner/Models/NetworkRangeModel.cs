@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetworkScanClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace NetworkScanner
         public string StartIpAddress { get; set; } = "192.168.1.1";
         public string EndIpAddress { get; set; } = "192.168.1.50";
         public string Subnet { get; set; } = "255.255.255.0";
-        public ObservableCollection<NetworkScannerPingResultModel> ListOfActiveNetworkIpAddresses { get; set; }
+        public ObservableCollection<ScanResponse> ListOfActiveNetworkIpAddresses { get; set; }
         public NetworkRangeModel()
         {
-            ListOfActiveNetworkIpAddresses = new ObservableCollection<NetworkScannerPingResultModel>();
+            ListOfActiveNetworkIpAddresses = new ObservableCollection<ScanResponse>();
         }
     }
 }

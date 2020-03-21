@@ -2,6 +2,7 @@
     x:Class="NetworkScanner.FormPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:NSCL="clr-namespace:NetworkScanClassLibrary;assembly=NetworkScanClassLibrary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.com/icons/"
     xmlns:local="clr-namespace:NetworkScanner"
@@ -112,7 +113,7 @@
                     FontSize="{Binding FontSizeScaledForWindowWidth}"
                     ItemsSource="{Binding NetworkRange.ListOfActiveNetworkIpAddresses}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:NetworkScannerPingResultModel}">
+                        <DataTemplate DataType="{x:Type NSCL:ScanResponse}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -143,7 +144,7 @@
                                     Content="Average Time:" />
                                 <Label Grid.Column="7" HorizontalContentAlignment="Center">
                                     <TextBlock>
-                                        <Run Text="{Binding AverageTime}" />
+                                        <Run Text="{Binding AverageResponse}" />
                                         <Run Text="ms" />
                                     </TextBlock>
                                 </Label>
@@ -153,7 +154,7 @@
                                     Content="Max Time:" />
                                 <Label Grid.Column="11" HorizontalContentAlignment="Center">
                                     <TextBlock>
-                                        <Run Text="{Binding MaxTime}" />
+                                        <Run Text="{Binding MaxResponse}" />
                                         <Run Text="ms" />
                                     </TextBlock>
                                 </Label>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetworkScanClassLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,19 +19,21 @@ namespace NetworkScanner
 
             NetworkRange =  new NetworkRangeModel()
             {
-                ListOfActiveNetworkIpAddresses = new System.Collections.ObjectModel.ObservableCollection<NetworkScannerPingResultModel>()
+                ListOfActiveNetworkIpAddresses = new System.Collections.ObjectModel.ObservableCollection<ScanResponse>()
                 {
-                    new NetworkScannerPingResultModel()
+                    new ScanResponse()
                     {
                         IpAddress = "192.168.1.10",
-                        AverageTime = "10",
-                        MaxTime = "20"
+                        AverageResponse = "10",
+                        MaxResponse = "20",
+                        Status = ScanResponseStatus.ok
                     },
-                    new NetworkScannerPingResultModel()
+                    new ScanResponse()
                     {
                         IpAddress = "192.168.1.20",
-                        AverageTime = "10",
-                        MaxTime = "20"
+                        AverageResponse = "10",
+                        MaxResponse = "20",
+                        Status = ScanResponseStatus.ok
                     },
                 }
             };

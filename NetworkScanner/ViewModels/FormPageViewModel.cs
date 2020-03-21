@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static NetworkScanClassLibrary.NetworkSettings;
 
 namespace NetworkScanner
 {
@@ -31,7 +32,7 @@ namespace NetworkScanner
         #endregion
         #region Private Variables
         private ISettingsService _settingsService;
-        private NetworkPing scanner;
+        private INetworkPing scanner;
         private double fontSize = 18;
         #endregion
         #region Constructor
@@ -86,17 +87,18 @@ namespace NetworkScanner
         private async Task ScanIpAddressAsync(string ipAddress)
         {
             var result = await scanner.ScanAddressForResponseTimes(ipAddress, AppSetings.PingTimeout, AppSetings.NumberOfPings);
-            var data = new NetworkScannerPingResultModel()
+            var data = new ScanResponse()
             {
                 IpAddress = result.IpAddress,
-                AverageTime = result.AverageResponse,
-                MaxTime = result.MaxResponse
+                AverageResponse = result.AverageResponse,
+                MaxResponse = result.MaxResponse,
+                Status = result.Status
             };
             AddIpAddressToList(data);
         }
-        private void AddIpAddressToList(NetworkScannerPingResultModel ipAddress)
+        private void AddIpAddressToList(ScanResponse ipAddressResponse)
         {
-            NetworkRange.ListOfActiveNetworkIpAddresses.Add(ipAddress);
+            NetworkRange.ListOfActiveNetworkIpAddresses.Add(ipAddressResponse);
         }
         private void UpdateInformationWithCurrentIpAddress(string ipAddress)
         {
@@ -116,9 +118,9 @@ namespace NetworkScanner
         }
         private void SetIpRangeBasedOnActiveInterfaceAdapter()
         {
-            NetworkRange.StartIpAddress = scanner.GetFirstIpAddressInNetwork();
-            NetworkRange.EndIpAddress = scanner.GetLastIpAddressInNetwork();
-            NetworkRange.Subnet = scanner.GetSubnetAddressOfNetwork();
+            NetworkRange.StartIpAddress = GetFirstIpAddressInNetwork();
+            NetworkRange.EndIpAddress = GetLastIpAddressInNetwork();
+            NetworkRange.Subnet = GetSubnetAddressOfNetwork();
         }
         #endregion
 
